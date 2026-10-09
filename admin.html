@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Pharmacist dashboard - Seaway Valley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--soft:#F3F6FA;--navy:#0B2447;--ink:#0B2447;--mute:#51617D;--line:#E1E7F0;--red:#C8283C;--green:#1C7A4B;--on-navy:#fff;--sky:#E3EDFD}
+@media (prefers-color-scheme:dark){:root{--bg:#08111F;--soft:#0E1A2E;--ink:#EAF0FA;--mute:#9FB0CA;--line:#1D2B45;--navy:#2A5DA8;--green:#4CC38A;--sky:#14264A}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:500;letter-spacing:-.01em;line-height:1.15;margin:0}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px}
+.brand{font:700 14px/1.15 Manrope,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#054F7D}
+@media (prefers-color-scheme:dark){.brand{color:#9CC0FF}}
+.brand small{display:block;font-weight:500;letter-spacing:.02em;text-transform:none;color:var(--mute);font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid transparent;font-weight:700;font-size:15px;cursor:pointer;background:var(--navy);color:var(--on-navy);transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn.sec{background:none;border-color:var(--line);color:var(--ink)}
+.btn.sec:hover{border-color:var(--mute)}
+.btn.red{background:var(--red);color:#fff}
+.btn.sm{min-height:38px;padding:0 14px;font-size:14px}
+.login{max-width:420px;margin:12vh auto 0;padding:32px 24px;border:1.5px solid var(--line);border-radius:28px;background:var(--soft)}
+.login h1{font-size:30px;margin-bottom:6px}
+.login p{color:var(--mute);margin:0 0 20px}
+label.f{display:grid;gap:6px;font-weight:700;font-size:14px;margin-bottom:14px}
+input[type=password],input[type=text],input[type=date],input[type=time],input[type=number],select{min-height:48px;padding:0 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid #6EA8FF;outline-offset:2px}
+.msg{border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px;margin:0 0 14px}
+.msg.bad{background:color-mix(in srgb,var(--red) 12%,var(--bg));border:1.5px solid color-mix(in srgb,var(--red) 40%,var(--bg))}
+.msg.ok{background:color-mix(in srgb,var(--green) 14%,var(--bg));border:1.5px solid color-mix(in srgb,var(--green) 45%,var(--bg))}
+.msg.warn{background:var(--soft);border:1.5px dashed var(--mute)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 0 0;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:none;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:none;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected=true]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+main{padding:20px 0 90px}
+.card{border:1.5px solid var(--line);border-radius:24px;padding:20px;background:var(--bg);margin-bottom:18px}
+.card h2{font-size:24px;margin-bottom:4px}
+.card>p.sub{color:var(--mute);margin:0 0 16px}
+.strip{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x proximity}
+.dcard{flex:none;scroll-snap-align:start;min-width:104px;border:1.5px solid var(--line);border-radius:18px;padding:10px 12px;background:var(--bg);text-align:left;cursor:pointer;line-height:1.3}
+.dcard b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.dcard span{display:block;font-weight:700;font-size:17px}
+.dcard small{display:block;font-size:12.5px;color:var(--mute)}
+.dcard.on{border-color:var(--navy);box-shadow:0 0 0 2px var(--navy)}
+.dcard.off{opacity:.6}
+.dcard i{font-style:normal;font-weight:700;color:var(--red)}
+.daybar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.daybar h3{font-size:24px;flex:1 1 220px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin:0 0 12px}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px;border:1.5px solid var(--line)}
+.legend .a::before{border-color:var(--green)}.legend .b::before{background:var(--red);border-color:var(--red)}.legend .lx::before{background:repeating-linear-gradient(45deg,var(--line) 0 3px,transparent 3px 6px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.sl{min-height:58px;border-radius:14px;border:1.5px solid var(--green);background:var(--bg);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.25;font-weight:700;padding:4px}
+.sl small{font-weight:500;font-size:12px;color:var(--mute)}
+.sl.booked{background:var(--red);border-color:var(--red);color:#fff}.sl.booked small{color:#fff;opacity:.9}
+.sl.blocked{border-color:var(--line);background:repeating-linear-gradient(45deg,var(--soft) 0 6px,var(--bg) 6px 12px);color:var(--mute)}
+.sl.past{border-color:var(--line);color:var(--mute);opacity:.55;cursor:default}
+.sl.sel{outline:3px solid #6EA8FF;outline-offset:2px}
+.actbar{margin-top:16px;padding:14px;border-radius:16px;background:var(--soft);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.actbar p{margin:0;flex:1 1 200px;font-weight:700}
+.empty{color:var(--mute);padding:18px 0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font:700 12px/1.2 Manrope,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);text-align:left;padding:8px 8px 8px 0}
+td{padding:11px 8px 11px 0;border-top:1px solid var(--line);vertical-align:middle}
+td.r{text-align:right;padding-right:0}
+.wk{display:grid;gap:0}
+.wrow{display:grid;grid-template-columns:128px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line);align-items:start}
+.wrow:first-child{border-top:0}
+.wd{font-weight:700;font-size:17px}
+.sw{display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:14px;color:var(--mute);margin-top:2px;cursor:pointer}
+.sw input{width:22px;height:22px;accent-color:var(--navy)}
+.ranges{display:grid;gap:10px}
+.rg{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rg input{width:auto;min-width:0;flex:1 1 110px;max-width:170px}
+.rg .to{color:var(--mute)}
+.x{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:none;cursor:pointer;font-size:20px;line-height:1;color:var(--mute)}
+.x:hover{border-color:var(--red);color:var(--red)}
+.link{background:none;border:0;padding:6px 0;font-weight:700;font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.closed{color:var(--mute);padding:10px 0}
+.savebar{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1.5px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:15}
+.savebar .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.savebar p{margin:0;color:var(--mute);font-size:14px}
+.rad{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.rad label{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-weight:700;font-size:15px}
+.rad label:has(input:checked){border-color:var(--navy);background:var(--soft)}
+.rad input{accent-color:var(--navy);width:20px;height:20px}
+.row2{display:grid;gap:0 14px}
+@media (min-width:600px){.row2{grid-template-columns:1fr 1fr}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px}}
+.tag{display:inline-block;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700;border:1.5px solid var(--line)}
+.tag.red{background:var(--red);border-color:var(--red);color:#fff}.tag.green{border-color:var(--green);color:var(--green)}
+.note{font-size:14px;color:var(--mute)}
+@media (max-width:560px){.wrow{grid-template-columns:1fr}.card{padding:16px;border-radius:20px}.daybar h3{font-size:21px}th.h,td.h{display:none}.rg .x{flex:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var app=$('#app');
+var DAYS=[['mon','Monday'],['tue','Tuesday'],['wed','Wednesday'],['thu','Thursday'],['fri','Friday'],['sat','Saturday'],['sun','Sunday']];
+var S={tab:'bookings',cfg:null,draft:null,dirty:false,today:'',date:'',overview:[],day:null,upcoming:[],sel:null,toast:null,status:null,choices:[10,15,20,30,45,60]};
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function t12(t){var h=+t.slice(0,2),m=t.slice(3);return ((h+11)%12+1)+':'+m+' '+(h<12?'AM':'PM')}
+function dl(iso,o){return new Date(iso+'T12:00:00').toLocaleDateString('en-CA',o)}
+function api(method,url,body){
+  return fetch(url,{method:method,credentials:'same-origin',cache:'no-store',headers:body!==undefined?{'Content-Type':'application/json','X-SV-Admin':'1'}:(method==='GET'?{}:{'X-SV-Admin':'1'}),body:body!==undefined?JSON.stringify(body):undefined})
+    .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(r.status===401&&url.indexOf('/login')<0&&url.indexOf('/password')<0&&url.indexOf('/me')<0){S.authed=false;login();throw {handled:1}}if(!r.ok){j.status=r.status;throw j}return j})},function(){throw {message:'Could not reach the server. Check your internet connection.'}});
+}
+function flash(kind,text){S.toast={kind:kind,text:text};var el=$('#toast');if(el){el.className='msg '+kind;el.textContent=text;el.hidden=false;clearTimeout(flash.t);flash.t=setTimeout(function(){el.hidden=true},6000);el.scrollIntoView({block:'nearest'})}}
+function fail(e){if(e&&e.handled)return;flash('bad',(e&&e.message)||'Something went wrong. Please try again.')}
+
+/* ---------------- login ---------------- */
+function login(note){
+  app.innerHTML='<div class="wrap"><form class="login" id="lf"><h1>Pharmacist dashboard</h1><p>Seaway Valley Compounding Pharmacy. Sign in to manage appointment times.</p>'
+    +(note?'<p class="msg bad" role="alert">'+esc(note)+'</p>':'')
+    +'<label class="f">Password<input type="password" id="pw" autocomplete="current-password" required autofocus></label><button class="btn" style="width:100%" id="lb" type="submit">Sign in</button></form></div>';
+  $('#lf').addEventListener('submit',function(e){
+    e.preventDefault();var b=$('#lb');b.disabled=true;b.textContent='Signing in...';
+    api('POST','/api/admin/login',{password:$('#pw').value}).then(function(){start()},function(er){login(er.message||'Sign in failed.')});
+  });
+}
+
+/* ---------------- shell ---------------- */
+function shell(){
+  var tabs=[['bookings','Appointments'],['weekly','Weekly hours'],['dates','Days off & extra hours'],['settings','Settings']];
+  app.innerHTML='<header class="top"><div class="wrap"><div class="brand">Seaway Valley<small>Appointment dashboard</small></div><button class="btn sec sm" id="out">Sign out</button></div></header>'
+    +'<div class="wrap"><nav class="tabs" role="tablist">'+tabs.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+'</button>'}).join('')+'</nav>'
+    +'<main><div id="toast" class="msg" role="status" hidden></div>'+(S.status&&!S.status.fax.ok?'<p class="msg bad">Faxing is not set up yet ('+esc(S.status.fax.why||'')+'). Patients cannot submit requests until it is. See the README.</p>':'')
+    +(S.status&&S.status.fax.test?'<p class="msg warn">Faxing is in TEST mode: faxes are not being sent to the pharmacy.</p>':'')+'<div id="view"></div></main></div><div id="sb"></div>';
+  $('#out').onclick=function(){api('POST','/api/admin/logout',{}).then(function(){login()})};
+  document.querySelectorAll('[data-tab]').forEach(function(b){b.onclick=function(){
+    S.tab=b.getAttribute('data-tab');shell();view();
+  }});
+}
+function view(){var v=$('#view');({bookings:vBookings,weekly:vWeekly,dates:vDates,settings:vSettings})[S.tab](v);saveBar()}
+function saveBar(){
+  var sb=$('#sb');if(!sb)return;
+  if(!S.dirty){sb.innerHTML='';return}
+  sb.innerHTML='<div class="savebar"><div class="wrap"><p>You have unsaved changes.</p><div style="display:flex;gap:10px"><button class="btn sec" id="dis">Discard</button><button class="btn" id="sv">Save changes</button></div></div></div>';
+  $('#dis').onclick=function(){S.draft=null;S.dirty=false;view()};
+  $('#sv').onclick=saveDraft;
+}
+
+/* ---------------- data ---------------- */
+function loadAll(){
+  return Promise.all([api('GET','/api/admin/config'),api('GET','/api/admin/overview'),api('GET','/api/admin/upcoming')]).then(function(r){
+    S.cfg=r[0].config;S.choices=r[0].choices;S.today=r[0].today;S.overview=r[1].days;S.upcoming=r[2].bookings;
+    if(!S.date)S.date=S.today;
+    return loadDay();
+  });
+}
+function loadDay(){return api('GET','/api/admin/day?date='+S.date).then(function(d){S.day=d})}
+function refresh(){return Promise.all([api('GET','/api/admin/overview'),api('GET','/api/admin/upcoming'),loadDay()]).then(function(r){S.overview=r[0].days;S.upcoming=r[1].bookings})}
+/* read-modify-write on the saved settings so edits in different tabs never overwrite each other */
+function mutate(fn){
+  return api('GET','/api/admin/config').then(function(r){var c=r.config;fn(c);return api('PUT','/api/admin/config',c)}).then(function(r){S.cfg=r.config;return refresh()});
+}
+function saveDraft(){
+  var d=S.draft,bad=null;
+  DAYS.forEach(function(x){(d.weekly[x[0]]||[]).forEach(function(r){if(!r.start||!r.end||r.end<=r.start)bad=x[1]})});
+  if(bad){flash('bad','Please check the hours for '+bad+': each "to" time must be later than its "from" time.');return}
+  var b=$('#sv');if(b){b.disabled=true;b.textContent='Saving...'}
+  mutate(function(c){c.weekly=d.weekly;c.slotMinutes=d.slotMinutes;c.windowDays=d.windowDays;c.minNoticeHours=d.minNoticeHours}).then(function(){
+    S.draft=null;S.dirty=false;view();flash('ok','Saved. The website now shows these times.');
+  },function(e){if(b){b.disabled=false;b.textContent='Save changes'}fail(e)});
+}
+function draft(){if(!S.draft)S.draft=JSON.parse(JSON.stringify({weekly:S.cfg.weekly,slotMinutes:S.cfg.slotMinutes,windowDays:S.cfg.windowDays,minNoticeHours:S.cfg.minNoticeHours}));return S.draft}
+function touch(){S.dirty=true;saveBar()}
+
+/* ---------------- appointments tab ---------------- */
+function vBookings(v){
+  var h='<div class="card"><h2>Next days</h2><p class="sub">Tap a day to see its times.</p><div class="strip" id="strip">';
+  S.overview.forEach(function(d){
+    var closed=d.total===0;
+    h+='<button class="dcard'+(d.date===S.date?' on':'')+(closed?' off':'')+'" data-d="'+d.date+'"><b>'+dl(d.date,{weekday:'short'})+'</b><span>'+dl(d.date,{month:'short',day:'numeric'})+'</span><small>'+(closed?'Closed':(d.booked?'<i>'+d.booked+' booked</i> · ':'')+d.available+' open')+'</small></button>';
+  });
+  h+='</div></div><div class="card" id="daycard"></div><div class="card"><h2>Upcoming bookings</h2><p class="sub">Patient details arrive by fax with the same reference. Nothing about the patient is kept here.</p><div id="upc"></div></div>';
+  v.innerHTML=h;
+  document.querySelectorAll('.dcard').forEach(function(b){b.onclick=function(){S.date=b.getAttribute('data-d');S.sel=null;loadDay().then(function(){drawDay();document.querySelectorAll('.dcard').forEach(function(x){x.classList.toggle('on',x===b)})},fail)}});
+  var on=$('.dcard.on');if(on&&on.scrollIntoView)on.parentNode.scrollLeft=Math.max(0,on.offsetLeft-16);
+  drawDay();drawUpcoming();
+}
+function drawDay(){
+  var c=$('#daycard');if(!c)return;var d=S.day,h='';
+  h+='<div class="daybar"><h3>'+esc(dl(S.date,{weekday:'long',month:'long',day:'numeric'}))+'</h3><input type="date" id="pick" value="'+S.date+'" style="width:auto;min-width:160px" aria-label="Go to date"></div>';
+  h+='<div class="legend"><span class="a">Open</span><span class="b">Booked</span><span class="lx">Blocked</span><span>Greyed = already passed</span></div>';
+  if(!d.slots.length)h+='<p class="empty">No appointment times on this day. Use "Weekly hours" to open it, or add extra hours under "Days off &amp; extra hours".</p>';
+  else{
+    h+='<div class="grid">';
+    d.slots.forEach(function(s){
+      var cls=s.status==='booked'?'booked':s.status==='blocked'?'blocked':s.status==='past'?'past':'';
+      h+='<button class="sl '+cls+(S.sel===s.time?' sel':'')+'" data-t="'+s.time+'" '+(s.status==='past'?'disabled':'')+'>'+t12(s.time)+'<small>'+(s.status==='booked'?(s.kind==='vaccine'?'Vaccine':'Ailment')+' · '+esc(s.ref):s.status==='blocked'?'Blocked':s.status==='past'?'Passed':'Open')+'</small></button>';
+    });
+    h+='</div>';
+  }
+  h+='<div id="act"></div>';
+  var allBlocked=S.cfg.blocked[S.date]&&S.cfg.blocked[S.date].all;
+  h+='<p style="margin:18px 0 0">'+(allBlocked?'<button class="btn sec sm" id="reopen">Reopen this whole day</button>':'<button class="btn sec sm" id="closeday">Close this whole day</button>')+'</p>';
+  c.innerHTML=h;
+  $('#pick').onchange=function(){if(this.value){S.date=this.value;S.sel=null;loadDay().then(function(){drawDay()},fail)}};
+  c.querySelectorAll('.sl:not(.past)').forEach(function(b){b.onclick=function(){S.sel=b.getAttribute('data-t');c.querySelectorAll('.sl').forEach(function(x){x.classList.toggle('sel',x===b)});drawAct()}});
+  var cd=$('#closeday');if(cd)cd.onclick=function(){if(!confirm('Close '+dl(S.date,{weekday:'long',month:'long',day:'numeric'})+'? Patients will not see any times on this day. Existing bookings stay on the list.'))return;mutate(function(cfg){cfg.blocked[S.date]={all:true}}).then(function(){drawDay();redrawStrip();flash('ok','Day closed.')},fail)};
+  var ro=$('#reopen');if(ro)ro.onclick=function(){mutate(function(cfg){delete cfg.blocked[S.date]}).then(function(){drawDay();redrawStrip();flash('ok','Day reopened.')},fail)};
+  drawAct();
+}
+function redrawStrip(){var st=$('#strip');if(!st)return;var left=st.scrollLeft;vBookings($('#view'));var s2=$('#strip');if(s2)s2.scrollLeft=left}
+function drawAct(){
+  var a=$('#act');if(!a)return;
+  var s=S.day.slots.filter(function(x){return x.time===S.sel})[0];
+  if(!s){a.innerHTML='';return}
+  var h='<div class="actbar"><p>'+t12(s.time)+' · '+(s.status==='booked'?'Booked ('+(s.kind==='vaccine'?'vaccination':'minor ailment')+', ref '+esc(s.ref)+')':s.status==='blocked'?'Blocked (patients cannot book it)':'Open')+'</p>';
+  if(s.status==='available')h+='<button class="btn sm" id="a1">Block this time</button>';
+  if(s.status==='blocked')h+='<button class="btn sm" id="a2">Make it open again</button>';
+  if(s.status==='booked')h+='<button class="btn red sm" id="a3">Cancel this booking</button>';
+  a.innerHTML=h+'</div>';
+  function act(body,okmsg){api('POST','/api/admin/slot',body).then(function(){return refresh()}).then(function(){S.sel=null;drawDay();drawUpcoming();redrawStrip();flash('ok',okmsg)},fail)}
+  var b1=$('#a1');if(b1)b1.onclick=function(){act({action:'block',date:S.date,time:s.time},'Time blocked.')};
+  var b2=$('#a2');if(b2)b2.onclick=function(){act({action:'unblock',date:S.date,time:s.time},'Time is open again.')};
+  var b3=$('#a3');if(b3)b3.onclick=function(){if(confirm('Cancel the booking at '+t12(s.time)+'? The time becomes open again. The patient is not notified automatically, so call them if needed (their phone number is on the fax with reference '+s.ref+').'))act({action:'cancel',ref:s.ref},'Booking cancelled. The time is open again.')};
+}
+function drawUpcoming(){
+  var u=$('#upc');if(!u)return;
+  if(!S.upcoming.length){u.innerHTML='<p class="empty">No upcoming bookings.</p>';return}
+  u.innerHTML='<table><thead><tr><th>When</th><th class="h">Type</th><th>Ref</th><th></th></tr></thead><tbody>'+S.upcoming.map(function(b){
+    return '<tr><td><b>'+esc(dl(b.date,{weekday:'short',month:'short',day:'numeric'}))+'</b><br>'+t12(b.time)+'</td><td class="h"><span class="tag">'+(b.kind==='vaccine'?'Vaccination':'Minor ailment')+'</span></td><td>'+esc(b.ref)+'</td><td class="r"><button class="btn sec sm" data-go="'+b.date+'" data-t="'+b.time+'">View</button></td></tr>';
+  }).join('')+'</tbody></table>';
+  u.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){S.date=b.getAttribute('data-go');S.sel=b.getAttribute('data-t');loadDay().then(function(){drawDay();document.querySelectorAll('.dcard').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-d')===S.date)});$('#daycard').scrollIntoView({behavior:'smooth',block:'start'})},fail)}});
+}
+
+/* ---------------- weekly hours tab ---------------- */
+function vWeekly(v){
+  var d=draft();
+  var h='<div class="card"><h2>Weekly hours</h2><p class="sub">Set the hours patients can book on each day. Add a second range for a break, for example 9:00 to 12:00 and 13:00 to 17:00. Changes appear on the website as soon as you save.</p><div class="wk">';
+  DAYS.forEach(function(x){
+    var r=d.weekly[x[0]]||[],open=r.length>0;
+    h+='<div class="wrow" data-day="'+x[0]+'"><div><div class="wd">'+x[1]+'</div><label class="sw"><input type="checkbox" class="op" '+(open?'checked':'')+'> '+(open?'Open':'Closed')+'</label></div><div class="ranges">';
+    if(!open)h+='<div class="closed">No appointments on '+x[1]+'s.</div>';
+    r.forEach(function(g,i){h+='<div class="rg" data-i="'+i+'"><input type="time" class="rs" value="'+g.start+'" step="300" aria-label="'+x[1]+' from"><span class="to">to</span><input type="time" class="re" value="'+g.end+'" step="300" aria-label="'+x[1]+' until"><button class="x" aria-label="Remove these hours" title="Remove">&times;</button></div>'});
+    if(open)h+='<div style="display:flex;gap:16px;flex-wrap:wrap"><button class="link add">+ Add another range</button>'+(x[0]==='mon'?'<button class="link copy">Copy Monday to Tuesday-Friday</button>':'')+'</div>';
+    h+='</div></div>';
+  });
+  h+='</div></div><p class="note">Times already booked are never removed when you change hours. Appointments are '+d.slotMinutes+' minutes long (change this under Settings).</p>';
+  v.innerHTML=h;
+  v.querySelectorAll('.wrow').forEach(function(row){
+    var k=row.getAttribute('data-day');
+    row.querySelector('.op').onchange=function(){d.weekly[k]=this.checked?[{start:'09:00',end:'17:00'}]:[];touch();vWeekly(v)};
+    row.querySelectorAll('.rg').forEach(function(g){
+      var i=+g.getAttribute('data-i');
+      g.querySelector('.rs').onchange=function(){d.weekly[k][i].start=this.value;touch()};
+      g.querySelector('.re').onchange=function(){d.weekly[k][i].end=this.value;touch()};
+      g.querySelector('.x').onclick=function(){d.weekly[k].splice(i,1);touch();vWeekly(v)};
+    });
+    var ad=row.querySelector('.add');if(ad)ad.onclick=function(){var l=d.weekly[k],last=l[l.length-1];d.weekly[k].push({start:last&&last.end<'18:00'?last.end:'13:00',end:last&&last.end<'18:00'?'18:00':'17:00'});touch();vWeekly(v)};
+    var cp=row.querySelector('.copy');if(cp)cp.onclick=function(){['tue','wed','thu','fri'].forEach(function(z){d.weekly[z]=JSON.parse(JSON.stringify(d.weekly.mon))});touch();vWeekly(v);flash('ok','Copied. Remember to press Save changes.')};
+  });
+}
+
+/* ---------------- days off & extra hours ---------------- */
+function vDates(v){
+  var cfg=S.cfg,items=[],all={};
+  Object.keys(cfg.blocked).forEach(function(d){all[d]=1});Object.keys(cfg.extra).forEach(function(d){all[d]=1});
+  Object.keys(all).sort().forEach(function(d){
+    if(d<S.today)return;
+    var b=cfg.blocked[d],e=cfg.extra[d];
+    if(b)items.push({d:d,kind:'b',txt:b.all?'Closed all day':'Closed '+b.ranges.map(function(r){return t12(r.start)+' to '+t12(r.end)}).join(', ')});
+    if(e)items.push({d:d,kind:'e',txt:'Extra hours '+e.map(function(r){return t12(r.start)+' to '+t12(r.end)}).join(', ')});
+  });
+  var h='<div class="card"><h2>Add a day off or extra hours</h2><p class="sub">For holidays, vacation, a long lunch, or a special Saturday. This works on top of your weekly hours.</p>'
+    +'<div class="rad" id="kind"><label><input type="radio" name="k" value="all" checked> Closed all day</label><label><input type="radio" name="k" value="part"> Closed part of the day</label><label><input type="radio" name="k" value="extra"> Open extra hours</label></div>'
+    +'<div class="row2"><label class="f">Date<input type="date" id="d1" min="'+S.today+'"></label><label class="f">Through (optional, for several days)<input type="date" id="d2" min="'+S.today+'"></label></div>'
+    +'<div class="row2" id="tr" hidden><label class="f">From<input type="time" id="t1" value="12:00" step="300"></label><label class="f">Until<input type="time" id="t2" value="13:00" step="300"></label></div>'
+    +'<button class="btn" id="add">Add</button></div>'
+    +'<div class="card"><h2>Coming up</h2><p class="sub">Tap Remove to undo any of these.</p>'
+    +(items.length?'<table><tbody>'+items.map(function(i,n){return '<tr><td><b>'+esc(dl(i.d,{weekday:'short',month:'short',day:'numeric',year:'numeric'}))+'</b><br><span class="note">'+esc(i.txt)+'</span></td><td class="r"><button class="btn sec sm" data-n="'+n+'">Remove</button></td></tr>'}).join('')+'</tbody></table>':'<p class="empty">Nothing added yet.</p>')+'</div>';
+  v.innerHTML=h;
+  function k(){return document.querySelector('input[name=k]:checked').value}
+  document.querySelectorAll('input[name=k]').forEach(function(r){r.onchange=function(){$('#tr').hidden=k()==='all'}});
+  $('#add').onclick=function(){
+    var d1=$('#d1').value,d2=$('#d2').value||d1,kind=k(),t1=$('#t1').value,t2=$('#t2').value;
+    if(!d1){flash('bad','Please choose a date.');return}
+    if(d2<d1){flash('bad','The "through" date must be on or after the first date.');return}
+    if(kind!=='all'&&(!t1||!t2||t2<=t1)){flash('bad','Please choose a start time and a later end time.');return}
+    var dates=[],x=new Date(d1+'T12:00:00'),end=new Date(d2+'T12:00:00');
+    while(x<=end&&dates.length<61){dates.push(x.getFullYear()+'-'+('0'+(x.getMonth()+1)).slice(-2)+'-'+('0'+x.getDate()).slice(-2));x.setDate(x.getDate()+1)}
+    if(dates.length>60){flash('bad','Please add 60 days or fewer at a time.');return}
+    mutate(function(c){dates.forEach(function(d){
+      if(kind==='all')c.blocked[d]={all:true};
+      else if(kind==='part'){var cur=c.blocked[d];if(cur&&cur.all)return;cur=cur||{ranges:[]};cur.ranges.push({start:t1,end:t2});c.blocked[d]=cur}
+      else{(c.extra[d]=c.extra[d]||[]).push({start:t1,end:t2})}
+    })}).then(function(){vDates(v);flash('ok','Added. The website is updated.')},fail);
+  };
+  v.querySelectorAll('[data-n]').forEach(function(b){b.onclick=function(){
+    var it=items[+b.getAttribute('data-n')];
+    mutate(function(c){if(it.kind==='b')delete c.blocked[it.d];else delete c.extra[it.d]}).then(function(){vDates(v);flash('ok','Removed.')},fail);
+  }});
+}
+
+/* ---------------- settings ---------------- */
+function vSettings(v){
+  var d=draft(),f=S.status&&S.status.fax;
+  v.innerHTML='<div class="card"><h2>Booking rules</h2><p class="sub">These apply to every day.</p>'
+    +'<div class="row3"><label class="f">Appointment length<select id="sm">'+S.choices.map(function(c){return '<option value="'+c+'"'+(c===d.slotMinutes?' selected':'')+'>'+c+' minutes</option>'}).join('')+'</select></label>'
+    +'<label class="f">Book up to how many days ahead?<input type="number" id="wd" min="1" max="120" value="'+d.windowDays+'"></label>'
+    +'<label class="f">Minimum notice (hours)<input type="number" id="mn" min="0" max="168" value="'+d.minNoticeHours+'"></label></div>'
+    +'<p class="note">Example: minimum notice of 2 hours means a patient cannot book a time that starts in less than 2 hours. Remember to press Save changes.</p></div>'
+    +'<div class="card"><h2>Fax status</h2><p style="margin:0 0 6px">'+(f&&f.ok?'<span class="tag green">Connected</span> sending through <b>'+esc(f.provider)+'</b>'+(f.test?' (TEST MODE, not really sending)':''):'<span class="tag red">Not set up</span> '+esc((f&&f.why)||''))+'</p><p class="note" style="margin:0">Completed forms are faxed to the pharmacy and are not stored on the website. Times are shown in '+esc(S.status?S.status.tz:'')+' time.</p></div>'
+    +'<div class="card"><h2>Change password</h2><p class="sub">Use at least 10 characters. Signing in again will be needed on other devices.</p><form id="pwf"><div class="row2"><label class="f">Current password<input type="password" id="p0" autocomplete="current-password"></label><label class="f">New password<input type="password" id="p1" autocomplete="new-password"></label></div><button class="btn" type="submit">Change password</button></form></div>';
+  $('#sm').onchange=function(){d.slotMinutes=+this.value;touch()};
+  $('#wd').oninput=function(){d.windowDays=Math.max(1,Math.min(120,+this.value||1));touch()};
+  $('#mn').oninput=function(){d.minNoticeHours=Math.max(0,Math.min(168,+this.value||0));touch()};
+  $('#pwf').onsubmit=function(e){e.preventDefault();api('POST','/api/admin/password',{current:$('#p0').value,next:$('#p1').value}).then(function(){$('#p0').value='';$('#p1').value='';flash('ok','Password changed.')},fail)};
+}
+
+function start(){
+  api('GET','/api/admin/me').then(function(me){S.status=me;S.authed=true;return loadAll()}).then(function(){shell();view()},function(e){
+    if(e&&e.handled)return;
+    if(e&&e.status===401){login(e.setup?'No password has been set up on the server yet. See the README (ADMIN_PASSWORD).':'');return}
+    app.innerHTML='<div class="wrap"><p class="msg bad" style="margin-top:40px">'+esc((e&&e.message)||'Could not load the dashboard.')+'</p></div>';
+  });
+}
+start();
+})();
+</script>
+</body>
+</html>
